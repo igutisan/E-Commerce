@@ -1,12 +1,12 @@
-package com.ecomerce.ecomerce.orders.model;
+package com.ecommerce.ecommerce.orders.model;
 
-import com.ecomerce.ecomerce.products.model.Product;
+import com.ecommerce.ecommerce.products.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity(name = "order_detail")
 @Data
@@ -19,10 +19,17 @@ public class OrderDetail {
 
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    private BigDecimal unitPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Product> products;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id")
+    private Product product;
+
+
 
 }

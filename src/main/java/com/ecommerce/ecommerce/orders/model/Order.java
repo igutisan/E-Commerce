@@ -1,15 +1,14 @@
-package com.ecomerce.ecomerce.orders.model;
+package com.ecommerce.ecommerce.orders.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ecommerce.ecommerce.users.model.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity(name = "orders")
@@ -25,6 +24,12 @@ public class Order {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    // Verifica rcomo funcionara la relacion con los usarios
-    // User (FK)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> details;
+
+
 }

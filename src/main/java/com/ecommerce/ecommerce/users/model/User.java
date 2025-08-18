@@ -1,40 +1,40 @@
-package com.ecomerce.ecomerce.products.model;
+package com.ecommerce.ecommerce.users.model;
 
-import com.ecomerce.ecomerce.users.model.User;
+
+import com.ecommerce.ecommerce.products.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "products")
+@Entity(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @SoftDelete
-public class Product {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;
 
-    private String description;
+    private String email;
 
-    private BigDecimal price;
+    private String password;
 
-    private int stock;
+    private String dni;
 
-    private LocalDateTime deleteAt;
+    private Role role = Role.CLIENT;
 
     @CreatedDate
     private LocalDateTime createAt;
@@ -42,12 +42,12 @@ public class Product {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Image> image;
 
+    @OneToMany(mappedBy = "user",
+               cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
 
 }

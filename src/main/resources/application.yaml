@@ -1,0 +1,20 @@
+# --- Base Configuration ---
+# Common properties for all profiles and default profile activation
+
+spring:
+  # Activate 'dev' profile by default if no other profile is specified
+  profiles:
+    active: dev
+
+  application:
+    name: ecommerce
+
+  # JPA settings common to all environments
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Common datasource properties
+  datasource:
+    driver-class-name: org.postgresql.Driver

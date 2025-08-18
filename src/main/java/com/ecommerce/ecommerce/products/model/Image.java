@@ -1,4 +1,4 @@
-package com.ecomerce.ecomerce.products.model;
+package com.ecommerce.ecommerce.products.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,6 +13,6 @@ public class Image {
     private String url;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = true)
     private Product product;
 }

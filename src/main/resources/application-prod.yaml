@@ -1,0 +1,16 @@
+# --- Production Profile ---
+# Properties for the 'prod' environment
+
+spring:
+  datasource:
+    # In production, credentials MUST be provided as environment variables
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    # Do not show SQL in logs in production for performance and security reasons
+    show-sql: false
+    hibernate:
+      # 'validate' ensures the schema matches the entities but does not make changes.
+      # This is a safe setting for production to prevent accidental data loss.
+      ddl-auto: validate
