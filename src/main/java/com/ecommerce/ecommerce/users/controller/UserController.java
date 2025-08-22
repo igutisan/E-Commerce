@@ -1,28 +1,25 @@
 package com.ecommerce.ecommerce.users.controller;
 
-import com.ecommerce.ecommerce.users.dto.UserRequestDTO;
-import com.ecommerce.ecommerce.users.dto.UserRequestUpdateDTO;
-import com.ecommerce.ecommerce.users.dto.UserResponseDTO;
+import com.ecommerce.ecommerce.auth.dto.TokenResponse;
+import com.ecommerce.ecommerce.auth.dto.UserLoginRequestDTO;
+import com.ecommerce.ecommerce.auth.service.AuthService;
+import com.ecommerce.ecommerce.users.dto.*;
 import com.ecommerce.ecommerce.users.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO user = userService.save(userRequestDTO);
-       return ResponseEntity.created(URI.create("/api/v1/user/"+user.id())).body(user);
-    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(@Valid @RequestBody UserRequestUpdateDTO userRequestDTO, @PathVariable String id) {

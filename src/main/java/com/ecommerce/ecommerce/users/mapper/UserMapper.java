@@ -1,6 +1,6 @@
 package com.ecommerce.ecommerce.users.mapper;
 
-import com.ecommerce.ecommerce.users.dto.UserRequestDTO;
+import com.ecommerce.ecommerce.auth.dto.UserRequestDTO;
 import com.ecommerce.ecommerce.users.dto.UserResponseDTO;
 import com.ecommerce.ecommerce.users.model.User;
 

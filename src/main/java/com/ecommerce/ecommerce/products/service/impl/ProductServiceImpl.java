@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.products.service.impl;
 
 import com.ecommerce.ecommerce.products.dto.ProductRequestDTO;
-import com.ecommerce.ecommerce.products.dto.ProductResponseDTO;
 import com.ecommerce.ecommerce.products.mapper.ProductMapper;
 import com.ecommerce.ecommerce.products.model.Image;
 import com.ecommerce.ecommerce.products.model.Product;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponseDTO create(ProductRequestDTO productRequestDTO) {
+    public Product create(ProductRequestDTO productRequestDTO) {
         User user = userService.findByIdLocal(productRequestDTO.userId());
 
         Product product = ProductMapper.toProduct(productRequestDTO, user);
@@ -44,27 +43,32 @@ public class ProductServiceImpl implements ProductService {
 
             imageRepository.saveAll(images);
         }
-        return ProductMapper.toProductResponseDTO(savedProduct);
+        return savedProduct;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> findAll() {
-        return productRepository.findAll().stream()
-                .map(ProductMapper::toProductResponseDTO)
-                .collect(Collectors.toList());
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ProductResponseDTO findById(String id) {
+    public List<Product> findAllById(Set<String> productIds) {
+
+        return productRepository.findAll();
+        }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Product findById(String id) {
         return productRepository.findById(id)
-                .map(ProductMapper::toProductResponseDTO).orElseThrow(() -> new RuntimeException("product not found"));
+                .orElseThrow(() -> new RuntimeException("product not found"));
     }
 
     @Override
     @Transactional
-    public ProductResponseDTO update(String id, ProductRequestDTO productRequestDTO) {
+    public Product update(String id, ProductRequestDTO productRequestDTO) {
         return productRepository.findById(id)
                 .map(existingProduct -> {
                     User user = userService.findByIdLocal(productRequestDTO.userId());
@@ -78,8 +82,7 @@ public class ProductServiceImpl implements ProductService {
                     // This might involve clearing the existing list and adding new images,
                     // or more complex logic to compare and update individual images.
                     
-                    Product updatedProduct = productRepository.save(existingProduct);
-                    return ProductMapper.toProductResponseDTO(updatedProduct);
+                    return productRepository.save(existingProduct);
                 }).orElseThrow(() -> new RuntimeException("product not found"));
     }
 
@@ -91,9 +94,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> findByName(String name) {
-        return productRepository.findByNameContainingIgnoreCase(name).stream()
-                .map(ProductMapper::toProductResponseDTO)
-                .collect(Collectors.toList());
+    public List<Product> findByName(String name) {
+        return productRepository.findByNameContainingIgnoreCase(name);
     }
 }

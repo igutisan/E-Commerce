@@ -1,26 +1,29 @@
 package com.ecommerce.ecommerce.products.service;
 
 import com.ecommerce.ecommerce.products.dto.ProductRequestDTO;
-import com.ecommerce.ecommerce.products.dto.ProductResponseDTO;
+import com.ecommerce.ecommerce.products.model.Product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ProductService {
 
 
-    ProductResponseDTO create(ProductRequestDTO productRequestDTO);
+    Product create(ProductRequestDTO productRequestDTO);
 
-    List<ProductResponseDTO> findAll();
+    List<Product> findAll();
+
+    List<Product> findAllById(Set<String> productIds);
+
+    Product findById(String id);
 
 
-    ProductResponseDTO findById(String id);
-
-
-    ProductResponseDTO update(String id, ProductRequestDTO productRequestDTO);
+    Product update(String id, ProductRequestDTO productRequestDTO);
 
 
     void deleteById(String id);
 
-    List<ProductResponseDTO> findByName(String name);
+
+    List<Product> findByName(String name);
 }

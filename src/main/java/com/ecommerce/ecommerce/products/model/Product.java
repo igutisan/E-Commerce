@@ -4,6 +4,7 @@ import com.ecommerce.ecommerce.orders.model.OrderDetail;
 import com.ecommerce.ecommerce.users.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SoftDelete;
@@ -18,6 +19,7 @@ import java.util.List;
 @Entity(name = "products")
 @Data
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @SoftDelete
 public class Product {
@@ -51,7 +53,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> image = new ArrayList<>();
 
-    };
+    }
 
 
 

@@ -2,14 +2,18 @@
 # Properties for the 'dev' environment
 
 spring:
+  application:
+    security:
+      jwt:
+        secret-key: ${JWT_SECRET_KEY}
+        expiration: 86400000
+        refresh-token:
+          expiration: 604800000
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
-    # In dev, we want Hibernate to show the SQL it's running
     show-sql: true
     hibernate:
-      # 'update' is useful for development to automatically apply schema changes.
-      # Be cautious with this in environments with real data.
-      ddl-auto: update
+      ddl-auto: create-drop
