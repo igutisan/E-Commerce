@@ -164,7 +164,8 @@ Authorization: Bearer <tu-jwt-token>
 
 ## 💾 Datos de Prueba
 
-Al iniciar la aplicación por primera vez, se cargan automáticamente datos de prueba:
+Al iniciar la aplicación por primera vez, si gustas probar la aplicacion puedes apuntar a este endpoint:
+| GET | `/api/seed` |
 
 ### Usuarios Predeterminados:
 - **Admin**: admin@example.com / adminpass
