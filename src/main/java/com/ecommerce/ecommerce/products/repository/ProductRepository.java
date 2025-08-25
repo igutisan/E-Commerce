@@ -5,15 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
 
-    /**
-     * Busca productos cuyo nombre contenga el término de búsqueda, ignorando mayúsculas y minúsculas.
-     *
-     * @param name El término de búsqueda para el nombre del producto.
-     * @return Una lista de productos que coinciden con el criterio de búsqueda.
-     */
+
     List<Product> findByNameContainingIgnoreCase(String name);
+
+    Optional<Product> findByIdAndUserId(String id, String userId);
+
+    List<Product> findAllByUserId(String userId);
+
+    void deleteByIdAndUserId(String id, String userId);
 }

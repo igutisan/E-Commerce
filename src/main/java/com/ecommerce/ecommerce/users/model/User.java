@@ -2,16 +2,16 @@ package com.ecommerce.ecommerce.users.model;
 
 
 import com.ecommerce.ecommerce.products.model.Product;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = {"tokens", "products"})
 @SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
 public class User implements  UserDetails {
@@ -41,12 +42,14 @@ public class User implements  UserDetails {
 
     private String dni;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role = Role.CLIENT;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime createAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @Column(nullable = true)
@@ -68,7 +71,7 @@ public class User implements  UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     @Override

@@ -14,6 +14,7 @@ public record ProductRequestDTO(
     @NotEmpty(message = "El nombre del producto no puede estar vacío.")
     String name,
 
+
     String description,
 
     @NotNull(message = "El precio no puede ser nulo.")
@@ -22,9 +23,6 @@ public record ProductRequestDTO(
 
     @Min(value = 0, message = "El stock no puede ser negativo.")
     int stock,
-
-    @NotNull(message = "El ID del usuario no puede ser nulo.")
-    String userId,
 
     @Nullable
     List<String> imageUrls

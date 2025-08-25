@@ -56,6 +56,10 @@ public class JwtService {
         return getClaims(token, Claims::getSubject);
     }
 
+    public String getUserIdFromToken(String token) {
+        return getClaims(token, Claims::getId);
+    }
+
    public boolean isTokenValid(String token, UserDetails userDetails) {
         var email =getEmailFromToken(token);
         return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -79,6 +83,6 @@ public class JwtService {
    }
 
    private boolean isTokenExpired(String token) {
-        return !getExpirationDate(token).before(new Date());
+        return getExpirationDate(token).before(new Date());
    }
 }

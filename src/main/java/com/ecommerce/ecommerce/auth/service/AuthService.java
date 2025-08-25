@@ -4,6 +4,7 @@ import com.ecommerce.ecommerce.auth.dto.TokenResponse;
 import com.ecommerce.ecommerce.auth.dto.UserLoginRequestDTO;
 import com.ecommerce.ecommerce.auth.dto.UserRequestDTO;
 
+import com.ecommerce.ecommerce.users.model.Role;
 import com.ecommerce.ecommerce.users.model.User;
 import com.ecommerce.ecommerce.users.repository.TokenRepository;
 import com.ecommerce.ecommerce.users.repository.UserRepository;
@@ -25,12 +26,12 @@ public class AuthService {
 
 
     public TokenResponse register(UserRequestDTO userRequestDTO) {
-        System.out.println(userRequestDTO.password());
         var user = User.builder()
                 .name(userRequestDTO.name())
                 .dni(userRequestDTO.dni())
                 .email(userRequestDTO.email())
                 .password(passwordEncoder.encode(userRequestDTO.password()))
+                .role(Role.CLIENT)
                 .build();
         var savedUser = userRepository.save(user);
         return new TokenResponse(jwtService.generateToken(savedUser));
