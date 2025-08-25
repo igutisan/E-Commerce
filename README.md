@@ -139,6 +139,42 @@ mvn spring-boot:run -Dspring.profiles.active=prod
 }
 ```
 
+### Pedidos (`/api/v1/orders`)
+
+| Método | Endpoint | Descripción | Autorización |
+|--------|----------|-------------|--------------|
+| POST | `/api/v1/orders` | Crear pedido | JWT Token |
+
+#### Ejemplo de Creación de Pedido:
+```json
+[
+  {
+    "quantity": 2,
+    "orderId": "order-uuid",
+    "productId": "product-uuid"
+  },
+  {
+    "quantity": 1,
+    "orderId": "order-uuid", 
+    "productId": "another-product-uuid"
+  }
+]
+```
+
+#### Respuesta de Pedido:
+```json
+{
+  "id": "order-uuid",
+  "orderDate": "2024-08-24T21:56:00",
+  "user": {
+    "id": "user-uuid",
+    "name": "Usuario Cliente",
+    "email": "usuario@email.com"
+  },
+  "orders": []
+}
+```
+
 ### Usuarios (`/api/v1/users`)
 
 | Método | Endpoint | Descripción | Autorización |
